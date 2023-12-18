@@ -28,10 +28,7 @@ class CartModel extends Model
     static public function getRecordById($id) {
     
         if(Auth::check()) {
-            return self::
-            // select('cart.*', 'product.name as product_name')
-            // ->join('product', 'cart.product_id', '=', 'product.id')
-            where('user_id', '=', Auth::user()->id)->where('id', $id)->first();
+            return self::where('user_id', '=', Auth::user()->id)->where('id', $id)->first();
         }
         return [];
     }

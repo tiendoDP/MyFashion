@@ -207,7 +207,7 @@ class CheckOutController extends Controller
                     $paymentId = $this->checkout($request, 1, 0);
                     $payment = Payment::find($paymentId);
                     $payment->status = 1;
-                    $payment->amount =  $request->fntotal * 23000;
+                    $payment->amount =  $request->fntotal;
                     $payment->save();
                     header('Location: ' . $vnp_Url);
                     die();

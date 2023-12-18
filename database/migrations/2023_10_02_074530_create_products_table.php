@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer('discount')->nullable();
             $table->boolean('status')->default(0)->comment('0: active 1: inactive');
             $table->integer('created_by');
+            $table->foreign('category_id')->references('id')->on('categories');
             $table->timestamps();
         });
     }
