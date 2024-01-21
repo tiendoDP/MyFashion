@@ -32,7 +32,7 @@
               <tr>
                 <th scope="row">{{$value->id}}</th>
                 <td>
-                  <img src="{{asset('assets/images/'.$value->image)}}" class="card-img-top" alt="..." style="max-width: 150px">
+                  <img src="{{asset('assets/images/products/'.$value->image)}}" class="card-img-top" alt="..." style="max-width: 150px">
                 </td>
                 <td>{{$value->name}}</td>
                 <td>{{$value->description}}</td>

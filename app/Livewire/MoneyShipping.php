@@ -20,7 +20,7 @@ class MoneyShipping extends Component
             $this->fnTotal = $this->total;
             session()->put('type_shipping', 'Free shipping');
         }
-        else if($tt == 10) {
+        else if($tt == 10000) {
             $this->fnTotal = $this->total + $tt;
             session()->put('type_shipping', 'Standart');
         }

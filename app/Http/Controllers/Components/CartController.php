@@ -19,21 +19,20 @@ class CartController extends Controller
 
             $cart = CartModel::getCartByProductId($id);
  
+            $product = ProductModel::find($id);
             if(!$cart) {      
-                $product = ProductModel::find($id);
                 $cartNew = new CartModel;
-                $cartNew->product_id = $product->id;   
-                
+                $cartNew->product_id = $product->id;                  
                 ($request->quantity == null) ? $cartNew->quantity = 1 : $cartNew->quantity = $request->quantity;
-                ($product->discount != null) ? $cartNew->price = number_format($product->price - ($product->price * ($product->discount / 100)), 2) : $cartNew->price = $product->price;
-                $cartNew->money = $cartNew->quantity * $cartNew->price;
+                if($product->discount == null) $cartNew->money = (int) $cartNew->quantity * (int) $product->price;
+                else $cartNew->money = (int) $product->price - ((int) $cartNew->quantity * (int) $product->price * (int) $product->discount / 100);
                 $cartNew->user_id = Auth::user()->id;
                 $cartNew->save();
                 return redirect()->back()->with('success', 'Cart added successfully');
             }
             else {       
                 ($request->quantity == null) ? $data['quantity'] = $cart[0]->quantity + 1 : $data['quantity'] = $cart[0]->quantity + $request->quantity;
-                $data['money'] = $data['quantity'] * $cart[0]->price;
+                $data['money'] = (int) $product->price * (int) $data['quantity'] - (int) $data['quantity'] * (int) $product->price * (int) $product->discount / 100;
                 DB::table('carts')->where('product_id', $id)->where('user_id', Auth::user()->id)->update($data);
                 return redirect()->back()->with('success', 'Cart added successfully');
             }

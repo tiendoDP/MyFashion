@@ -53,7 +53,7 @@
             </div><!-- End .container -->
         </div><!-- End .cart -->
     </div><!-- End .page-content -->
-</main><!-- End .main -->
+</main>
 
 @endsection
 

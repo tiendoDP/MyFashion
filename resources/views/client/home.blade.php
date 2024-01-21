@@ -96,7 +96,7 @@
                                                 <span class="product-label label-sale">Sale</span>
                                         @endif
                                         <a href="{{route('product', ['id' => $item->id])}}">
-                                            <img src="{{asset('assets/images/'.$item->image)}}" alt="Product image" class="product-image">
+                                            <img src="{{asset('assets/images/products/'.$item->image)}}" alt="Product image" class="product-image">
                                             {{-- <img src="assets/images/demos/demo-6/products/product-1-1.jpg" alt="Product image" class="product-image-hover"> --}}
                                         </a>
     
@@ -117,9 +117,9 @@
                                         <h3 class="product-title"><a href="{{route('product', ['id' => $item->id])}}">{{$item->name}}</a></h3><!-- End .product-title -->
                                         <div class="product-price">
                                             @if($item->discount != null)
-                                                <span class="new-price">Now ${{number_format($item->price - ($item->price * ($item->discount / 100)), 2)}}</span>
-                                                <span class="old-price">Was ${{number_format($item->price, 2)}}</span>
-                                                @else <span class="">${{number_format($item->price, 2)}}</span>
+                                                <span class="new-price">Now đ {{number_format((int) ($item->price - ($item->price * ($item->discount / 100))), 0 , ',', '.')}}</span>
+                                                <span class="old-price">Was đ {{number_format((int) $item->price, 0 , ',', '.')}}</span>
+                                                @else <span class="">đ {{number_format((int) $item->price, 0 , ',', '.')}}</span>
                                             @endif
                                         </div><!-- End .product-price -->
     
@@ -165,7 +165,7 @@
                                                 <span class="product-label label-sale">Sale</span>
                                         @endif
                                         <a href="{{route('product', ['id' => $item->id])}}">
-                                            <img src="{{asset('assets/images/'.$item->image)}}" alt="Product image" class="product-image">
+                                            <img src="{{asset('assets/images/products/'.$item->image)}}" alt="Product image" class="product-image">
                                             {{-- <img src="assets/images/demos/demo-6/products/product-1-1.jpg" alt="Product image" class="product-image-hover"> --}}
                                         </a>
     
@@ -186,9 +186,9 @@
                                         <h3 class="product-title"><a href="{{route('product', ['id' => $item->id])}}">{{$item->name}}</a></h3><!-- End .product-title -->
                                         <div class="product-price">
                                             @if($item->discount != null)
-                                                <span class="new-price">Now ${{number_format($item->price - ($item->price * ($item->discount / 100)), 2)}}</span>
-                                                <span class="old-price">Was ${{number_format($item->price, 2)}}</span>
-                                                @else <span class="">${{number_format($item->price, 2)}}</span>
+                                            <span class="new-price">Now đ {{number_format((int) ($item->price - ($item->price * ($item->discount / 100))), 0 , ',', '.')}}</span>
+                                            <span class="old-price">Was đ {{number_format((int) $item->price, 0 , ',', '.')}}</span>
+                                            @else <span class="">đ {{number_format((int) $item->price, 0 , ',', '.')}}</span>
                                             @endif
                                         </div><!-- End .product-price -->
     
@@ -234,7 +234,7 @@
                                                 <span class="product-label label-sale">Sale</span>
                                         @endif
                                         <a href="{{route('product', ['id' => $item->id])}}">
-                                            <img src="{{asset('assets/images/'.$item->image)}}" alt="Product image" class="product-image">
+                                            <img src="{{asset('assets/images/products/'.$item->image)}}" alt="Product image" class="product-image">
                                             {{-- <img src="assets/images/demos/demo-6/products/product-1-1.jpg" alt="Product image" class="product-image-hover"> --}}
                                         </a>
     
@@ -255,9 +255,9 @@
                                         <h3 class="product-title"><a href="{{route('product', ['id' => $item->id])}}">{{$item->name}}</a></h3><!-- End .product-title -->
                                         <div class="product-price">
                                             @if($item->discount != null)
-                                                <span class="new-price">Now ${{number_format($item->price - ($item->price * ($item->discount / 100)), 2)}}</span>
-                                                <span class="old-price">Was ${{number_format($item->price, 2)}}</span>
-                                                @else <span class="">${{number_format($item->price, 2)}}</span>
+                                            <span class="new-price">Now đ {{number_format((int) ($item->price - ($item->price * ($item->discount / 100))), 0 , ',', '.')}}</span>
+                                            <span class="old-price">Was đ {{number_format((int) $item->price, 0 , ',', '.')}}</span>
+                                            @else <span class="">đ {{number_format((int) $item->price, 0 , ',', '.')}}</span>
                                             @endif
                                         </div><!-- End .product-price -->
     
@@ -384,8 +384,8 @@
                 <div class="products">
                     <div class="row justify-content-center">
 
-                        @if(!empty($all_product))
-                            @foreach ($all_product as $item)
+                        @if(!empty($new_product))
+                            @foreach ($new_product as $item)
                                 <div class="col-6 col-md-4 col-lg-3">
                                     <div class="product product-7 text-center">
                                         <figure class="product-media">
@@ -393,7 +393,7 @@
                                                 <span class="product-label label-sale">Sale</span>
                                             @endif
                                             <a href="{{route('product', ['id' => $item->id])}}">
-                                                <img src="{{asset('assets/images/'.$item->image)}}" alt="Product image" class="product-image">
+                                                <img src="{{asset('assets/images/products/'.$item->image)}}" alt="Product image" class="product-image">
                                             </a>
         
                                             <div class="product-action-vertical">
@@ -412,9 +412,9 @@
                                             <h3 class="product-title"><a href="{{route('product', ['id' => $item->id])}}">{{$item->name}}</a></h3><!-- End .product-title -->
                                             <div class="product-price">
                                                 @if($item->discount != null)
-                                                <span class="new-price">Now ${{number_format($item->price - ($item->price * ($item->discount / 100)), 2)}}</span>
-                                                <span class="old-price">Was ${{number_format($item->price, 2)}}</span>
-                                                @else <span class="">${{number_format($item->price, 2)}}</span>
+                                                <span class="new-price">Now đ {{number_format((int) ($item->price - ($item->price * ($item->discount / 100))), 0 , ',', '.')}}</span>
+                                                <span class="old-price">Was đ {{number_format((int) $item->price, 0 , ',', '.')}}</span>
+                                                @else <span class="">đ {{number_format((int) $item->price, 0 , ',', '.')}}</span>
                                                 @endif
                                             </div><!-- End .product-price -->
                                         </div><!-- End .product-body -->
@@ -427,7 +427,7 @@
                 </div><!-- End .products -->
 
                 <div class="more-container text-center mt-2">
-                    <a href="#" class="btn btn-outline-dark-2 btn-more"><span>show more</span></a>
+                    <a href="{{route('product_list')}}" class="btn btn-outline-dark-2 btn-more"><span>show more</span></a>
                 </div><!-- End .more-container -->
             </div><!-- End .container -->
 
@@ -493,6 +493,11 @@
                 <div class="mb-5 mb-lg-7"></div><!-- End .mb-5 -->
 
                 <div class="container newsletter">
+                    @if(Auth::Check())
+                    <div class="row">
+                        <img src="{{asset('assets/images/banners/banner-fullwidth.jpg')}}" class="img-responsive img-centered img" alt="" />
+                    </div>
+                    @else 
                     <div class="row">
                         <div class="col-lg-6 banner-overlay-div">
                             <div class="banner banner-overlay">
@@ -513,17 +518,16 @@
                                 <div class="cta-content">
                                     <h3 class="cta-title">Subscribe To Our Newsletter</h3><!-- End .cta-title -->
                                     <p>Sign up now for <span class="primary-color">10% discount</span> on first order. Customise my news:</p>
-
-                                    <form action="#">
-                                        <input type="email" class="form-control" placeholder="Enter your Email Address" aria-label="Email Adress" required>
-                                        <div class="text-center">
-                                            <button class="btn btn-outline-dark-2" type="submit"><span>subscribe</span></i></button>
-                                        </div><!-- End .text-center -->
-                                    </form>
+                                    <div class="text-center">
+                                        <a href="{{route('register')}}" >
+                                            <button class="btn btn-outline-dark-2" type="submit"><span>sign up now</span></i></button>
+                                        </a>
+                                    </div><!-- End .text-center -->
                                 </div><!-- End .cta-content -->
                             </div><!-- End .cta -->
                         </div><!-- End .col-lg-6 -->
-                    </div><!-- End .row -->
+                    </div>
+                    @endif
                 </div><!-- End .container -->
             </div><!-- End .bg-gray -->
 

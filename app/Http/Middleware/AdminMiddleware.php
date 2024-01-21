@@ -22,12 +22,11 @@ class AdminMiddleware
             }
             else {
                 Auth::logout();
-                return redirect('admin');
+                return redirect('home');
             }
         }
         else {
-            Auth::logout();
-            return redirect('admin');
+            return redirect('home');
         }
     }
 }

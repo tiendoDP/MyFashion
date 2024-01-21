@@ -37,12 +37,13 @@ class ProductController extends Controller
         ]);
 
         $fileName = time().'.'.$request->image->getCLientOriginalExtension();
-        $request->image->move(public_path('assets/images'), $fileName);
+        $request->image->move(public_path('assets/images/products'), $fileName);
 
         $product = new ProductModel;
         $product->name = $request->name;
         $product->created_by = Auth::user()->id;
         $product->status = $request->status;
+        $product->sex = $request->sex;
         $product->description = $request->description;
         $product->category_id = $request->category_id;
         $product->quantity = $request->quantity;
@@ -78,7 +79,7 @@ class ProductController extends Controller
 
         if(!empty($request->image)) {
             $fileName = time().'.'.$request->image->getCLientOriginalExtension();
-            $request->image->move(public_path('assets/images'), $fileName);
+            $request->image->move(public_path('assets/images/products'), $fileName);
         }
 
 
@@ -86,6 +87,7 @@ class ProductController extends Controller
         $product->name = $request->name;
         $product->created_by = Auth::user()->id;
         $product->status = $request->status;
+        $product->sex = $request->sex;
         $product->description = $request->description;
         $product->category_id = $request->category_id;
         $product->quantity = $request->quantity;

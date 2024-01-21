@@ -8,8 +8,8 @@
 
 <div class="content-wrapper">
     <div class="p-3 d-flex justify-content-between align-items-center">
-        <p class="h2">Admin list</p>
-        <a href="{{url('admin/admin/add')}}" class="btn btn-primary">Add new Admin</a>
+        <p class="h2">Account list</p>
+        <a href="{{url('admin/admin/add')}}" class="btn btn-primary">Add new Account</a>
     </div>
     @if(!empty(session('success'))) <p class="h3">{{session('success')}}</p> @endif
     <table class="table ">
@@ -31,7 +31,7 @@
                 <td>{{$admin->name}}</td>
                 <td>{{$admin->email}}</td>
                 <td>{{($admin->status) == 0 ? 'active' : 'inactive'}}</td>
-                <td>{{($admin->role == 0) ? 'user' : 'admin'}}</td>
+                <td>{{($admin->roles) == 0 ? 'user' : 'admin'}}</td>
                 <td>
                   <a href="{{url('admin/admin/edit/'.$admin->id)}}" class="btn btn-primary">Edit</a>
                   @if ($admin->is_deleted == 0)

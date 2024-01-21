@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Molla - @if(!empty($header_title)) {{$header_title}} @endif</title>
+    <title>TD - @if(!empty($header_title)) {{$header_title}} @endif</title>
     <meta name="keywords" content="HTML5 Template">
     <meta name="description" content="Molla - Bootstrap eCommerce Template">
     <meta name="author" content="p-themes">
@@ -75,7 +75,4 @@
     @livewireScripts
     @yield('scripts')
 </body>
-
-
-<!-- molla/index-6.html  22 Nov 2019 09:56:39 GMT -->
 </html>

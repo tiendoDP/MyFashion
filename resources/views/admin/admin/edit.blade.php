@@ -41,13 +41,21 @@
             @enderror
         </div>
         <div class="form-group">
-            <label>Status</label>
-            <select class="form-control" name="status">
-                <option value="0" {{($admin->status == 0) ? 'selected' : ''}}>Active</option>
-                <option value="1" {{($admin->status == 1) ? 'selected' : ''}}>Inactive</option>
+            <label>Role</label>
+            <select class="form-control" name="role">
+                <option value="0" {{($admin->role == 0) ? 'selected' : ''}}>User</option>
+                <option value="1" {{($admin->role == 1) ? 'selected' : ''}}>Admin</option>
             </select>
             <small class="form-text text-muted"></small>
         </div>
+        <div class="form-group">
+          <label>Status</label>
+          <select class="form-control" name="status">
+              <option value="0" {{($admin->status == 0) ? 'selected' : ''}}>Active</option>
+              <option value="1" {{($admin->status == 1) ? 'selected' : ''}}>Inactive</option>
+          </select>
+          <small class="form-text text-muted"></small>
+      </div>
         
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>

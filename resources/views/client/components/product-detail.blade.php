@@ -26,7 +26,7 @@
                         <div class="product-gallery product-gallery-vertical">
                             <div class="row">
                                 <figure class="product-main-image">
-                                    <img id="product-zoom" src="{{asset('assets/images/'.$product_detail[0]['image'])}}" data-zoom-image="{{asset('assets/images/'.$product_detail[0]['image'])}} alt="product image">
+                                    <img id="product-zoom" src="{{asset('assets/images/products/'.$product_detail->image)}}" data-zoom-image="{{asset('assets/images/'.$product_detail->image)}} alt="product image">
 
                                     {{-- <a href="#" id="btn-product-gallery" class="btn-product-gallery">
                                         <i class="icon-arrows"></i>
@@ -38,7 +38,7 @@
 
                     <div class="col-md-6">
                         <div class="product-details">
-                            <h1 class="product-title">{{$product_detail[0]['name']}}</h1>
+                            <h1 class="product-title">{{$product_detail->name}}</h1>
 
                             <div class="ratings-container">
                                 <div class="ratings">
@@ -48,38 +48,31 @@
                             </div>
 
                             <div class="product-price">
-                                ${{$product_detail[0]['price']}}
+                                @if($product_detail->discount != null)
+                                <span class="new-price">đ {{number_format((int) ($product_detail->price - ($product_detail->price * ($product_detail->discount / 100))), 0 , ',', '.')}}</span>
+                                <span class="old-price">đ {{number_format((int) $product_detail->price, 0 , ',', '.')}}</span>
+                                @else <span class="">đ {{number_format((int) $product_detail->price, 0 , ',', '.')}}</span>
+                                @endif
                             </div>
 
                             <div class="product-content">
-                                <p>{{$product_detail[0]['description']}} Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing. Sed lectus. </p>
+                                <p>{{$product_detail->description}} Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing. Sed lectus. </p>
                             </div><!-- End .product-content -->
 
                             <form action="{{route('cart.add')}}" method="GET">
                                 @csrf
-                            <input type="hidden" name="id" value="{{$product_detail[0]['id']}}" />  
+                            <input type="hidden" name="id" value="{{$product_detail->id}}" />  
                             <div class="details-filter-row details-row-size">
                                 <label>Color:</label>
 
                                 <div class="product-nav product-nav-thumbs">
                                     <a href="#" class="active">
-                                        <img src="{{asset('assets/images/'.$product_detail[0]['image'])}}" alt="product desc">
+                                        <img src="{{asset('assets/images/products/'.$product_detail->image)}}" alt="product desc">
                                     </a>
                                 </div><!-- End .product-nav -->
                             </div>
                             
-                            <div class="details-filter-row details-row-size">
-                                <label for="size">Size:</label>
-                                <div class="select-custom">
-                                    <select name="size" id="size" class="form-control">
-                                        <option value="#" selected="selected">Select a size</option>
-                                        <option value="s">Small</option>
-                                        <option value="m">Medium</option>
-                                        <option value="l">Large</option>
-                                        <option value="xl">Extra Large</option>
-                                    </select>
-                                </div>
-                            </div>
+        
 
                             <div class="details-filter-row details-row-size">
                                 <label for="qty">Qty:</label>
@@ -100,7 +93,7 @@
                             <div class="product-details-footer">
                                 <div class="product-cat">
                                     <span>Category:</span>
-                                    <a href="#">{{$product_detail[0]['category_name']}}</a>,
+                                    <a href="#">{{$product_detail->category_name}}</a>,
                                     
                                 </div><!-- End .product-cat -->
 
@@ -123,12 +116,6 @@
                         <a class="nav-link active" id="product-desc-link" data-toggle="tab" href="#product-desc-tab" role="tab" aria-controls="product-desc-tab" aria-selected="true">Description</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="product-info-link" data-toggle="tab" href="#product-info-tab" role="tab" aria-controls="product-info-tab" aria-selected="false">Additional information</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="product-shipping-link" data-toggle="tab" href="#product-shipping-tab" role="tab" aria-controls="product-shipping-tab" aria-selected="false">Shipping & Returns</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" id="product-review-link" data-toggle="tab" href="#product-review-tab" role="tab" aria-controls="product-review-tab" aria-selected="false">Reviews (2)</a>
                     </li>
                 </ul>
@@ -146,32 +133,7 @@
                             <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. Aenean dignissim pellentesque felis. Phasellus ultrices nulla quis nibh. Quisque a lectus. Donec consectetuer ligula vulputate sem tristique cursus. </p>
                         </div><!-- End .product-desc-content -->
                     </div><!-- .End .tab-pane -->
-                    <div class="tab-pane fade" id="product-info-tab" role="tabpanel" aria-labelledby="product-info-link">
-                        <div class="product-desc-content">
-                            <h3>Information</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec odio. Quisque volutpat mattis eros. Nullam malesuada erat ut turpis. Suspendisse urna viverra non, semper suscipit, posuere a, pede. Donec nec justo eget felis facilisis fermentum. Aliquam porttitor mauris sit amet orci. </p>
-
-                            <h3>Fabric & care</h3>
-                            <ul>
-                                <li>Faux suede fabric</li>
-                                <li>Gold tone metal hoop handles.</li>
-                                <li>RI branding</li>
-                                <li>Snake print trim interior </li>
-                                <li>Adjustable cross body strap</li>
-                                <li> Height: 31cm; Width: 32cm; Depth: 12cm; Handle Drop: 61cm</li>
-                            </ul>
-
-                            <h3>Size</h3>
-                            <p>one size</p>
-                        </div><!-- End .product-desc-content -->
-                    </div><!-- .End .tab-pane -->
-                    <div class="tab-pane fade" id="product-shipping-tab" role="tabpanel" aria-labelledby="product-shipping-link">
-                        <div class="product-desc-content">
-                            <h3>Delivery & returns</h3>
-                            <p>We deliver to over 100 countries around the world. For full details of the delivery options we offer, please view our <a href="#">Delivery information</a><br>
-                            We hope you’ll love every purchase, but if you ever need to return an item you can do so within a month of receipt. For full details of how to make a return, please view our <a href="#">Returns information</a></p>
-                        </div><!-- End .product-desc-content -->
-                    </div><!-- .End .tab-pane -->
+                    
                     <div class="tab-pane fade" id="product-review-tab" role="tabpanel" aria-labelledby="product-review-link">
                         <div class="reviews">
                             <h3>Reviews (2)</h3>
@@ -263,9 +225,11 @@
                 @foreach($also_like as $item)
                 <div class="product product-7 text-center">
                     <figure class="product-media">
-                        <span class="product-label label-new">New</span>
+                        @if($item->discount != null)
+                            <span class="product-label label-sale">Sale</span>
+                        @endif
                         <a href="{{route('product', ['id' => $item->id])}}">
-                            <img src="{{asset('assets/images/'.$item->image)}}" alt="Product image" class="product-image">
+                            <img src="{{asset('assets/images/products/'.$item->image)}}" alt="Product image" class="product-image">
                         </a>
 
                         <div class="product-action-vertical">
@@ -279,11 +243,17 @@
 
                     <div class="product-body">
                         <div class="product-cat">
-                            <a href="#">Women</a>
+                            @if($item->sex == 0) Male
+                            @else Female
+                            @endif
                         </div><!-- End .product-cat -->
                         <h3 class="product-title"><a href="{{route('product', ['id' => $item->id])}}">{{$item->name}}</a></h3>
                         <div class="product-price">
-                            {{$item->price}}
+                            @if($item->discount != null)
+                            <span class="new-price">Now đ {{number_format((int) ($item->price - ($item->price * ($item->discount / 100))), 0 , ',', '.')}}</span>
+                            <span class="old-price">Was đ {{number_format((int) $item->price, 0 , ',', '.')}}</span>
+                            @else <span class="">đ {{number_format((int) $item->price, 0 , ',', '.')}}</span>
+                            @endif
                         </div><!-- End .product-price -->
                         <div class="ratings-container">
                             <div class="ratings">

@@ -22,9 +22,9 @@ class VerifyMiddleware
             }
             else {
                 Auth::logout();
-                return redirect()->route('home');
+                return redirect()->route('login');
             }
         }
-        return $next($request);
+        return redirect()->route('login');
     }
 }

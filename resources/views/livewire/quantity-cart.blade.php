@@ -23,7 +23,7 @@
                             <div class="product">
                                 <figure class="product-media">
                                     <a href="#">
-                                        <img src="{{ asset('assets/images/' . $cart->image) }}" alt="Product image">
+                                        <img src="{{ asset('assets/images/products/' . $cart->image) }}" alt="Product image">
                                     </a>
                                 </figure>
 
@@ -32,7 +32,12 @@
                                 </h3><!-- End .product-title -->
                             </div><!-- End .product -->
                         </td>
-                        <td class="price-col">${{ number_format($cart->price, 2) }}</td>
+                        <td class="price-col">
+                            @if($cart->discount != null)
+                            <span class="">đ {{number_format((int) ($cart->price - ($cart->price * ($cart->discount / 100))), 0 , ',', '.')}}</span>
+                            @else <span class="">đ {{number_format((int) $cart->price, 0 , ',', '.')}}</span>
+                            @endif
+                        </td>
                         <td class="quantity-col">
                             <div class="cart-product-quantity">
                                 <div class="input-group w-auto justify-content-start align-items-center">
@@ -43,7 +48,7 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="total-col">${{ number_format($cart->money, 2) }}</td>
+                        <td class="total-col">đ {{number_format((int) $cart->money, 0 , ',', '.')}}</td>
                         <td class="remove-col"><a href="{{ route('cart.delete', ['id' => $cart->id]) }}"
                                 class="btn-remove"><i class="icon-close"></i></a></td>
                     </tr>

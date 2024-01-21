@@ -37,7 +37,7 @@ class AdminController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
-        $user->role = 1;
+        $user->roles = $request->role;
         $user->status = $request->status;
         $user->save();
         
@@ -63,7 +63,7 @@ class AdminController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         if(!empty($request->password)) $user->password = Hash::make($request->password);
-        $user->role = 1;
+        $user->roles = $request->role;
         $user->status = $request->status;
         $user->save();
         

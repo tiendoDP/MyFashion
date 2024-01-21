@@ -53,6 +53,13 @@
             </select>
         </div>
         <div class="form-group">
+          <label>Sex</label>
+          <select class="form-control" name="sex" >
+            <option value="0">Male</option>
+            <option value="1">Female</option>
+          </select>
+      </div>
+        <div class="form-group">
             <label>Quantity</label>
             <input type="text" class="form-control" value="{{old('quantity')}}" name="quantity" placeholder="Quantity">
             @error('quantity')

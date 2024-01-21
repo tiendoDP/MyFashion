@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Order extends Model
 {
@@ -22,6 +23,13 @@ class Order extends Model
         'notes',
         'status',
     ];
+
+    public static function allOrder() {
+        return self::select('orders.*', 'payments.amount as amount')
+        ->join('payments', 'payments.order_id', '=', 'orders.id')
+        ->where('orders.user_id', '=', Auth::user()->id)
+        ->get();
+    }
 
     
 }

@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\CartModel;
+use App\Models\ProductModel;
 
 class QuantityCart extends Component
 {
@@ -23,8 +24,9 @@ class QuantityCart extends Component
             $this->dispatch('show-alert', 'Cart not exist!');
             return;
         }
+        $product = ProductModel::where('id', $cart->product_id)->first();
         $cart->decrement('quantity');
-        $cart->money = $cart->quantity * $cart->price;
+        ($product->discount == null) ? $cart->money = (int) $cart->quantity * (int) $product->price : $cart->money = $product->price - $cart->quantity * $product->price * $product->discount / 100;
         $cart->save();
         $this->updateCartData();
     }
@@ -35,8 +37,9 @@ class QuantityCart extends Component
             $this->dispatch('show-alert', 'Cart not exist!');
             return;
         }
+        $product = ProductModel::where('id', $cart->product_id)->first();
         $cart->increment('quantity');
-        $cart->money = $cart->quantity * $cart->price;
+        ($product->discount == null) ? $cart->money = $cart->quantity * $product->price : $cart->money = $product->price - $cart->quantity * $product->price * $product->discount / 100;
         $cart->save();
         $this->updateCartData();
     }

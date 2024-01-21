@@ -22,7 +22,7 @@ class CheckoutRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'fullname' => 'required',
+            'full_name' => 'required',
             'email' => 'required|email',
             'phone' => 'required|regex:/^\d{10,11}$/',
             'country' => 'required',
@@ -34,7 +34,7 @@ class CheckoutRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'fullname.required' => 'Vui lòng nhập họ và tên.',
+            'full_name.required' => 'Vui lòng nhập họ và tên.',
             'email.required' => 'Vui lòng nhập địa chỉ email.',
             'email.email' => 'Địa chỉ email không hợp lệ.',
             'phone.required' => 'Vui lòng nhập số điện thoại.',

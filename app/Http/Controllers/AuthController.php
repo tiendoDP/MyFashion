@@ -17,8 +17,11 @@ class AuthController extends Controller
 {
     public function login_admin() {
         
-        if(Auth::check() && Auth::User()->roles == 1) {
-            return redirect()->route('admin.dashboard');
+        if(Auth::check()) {
+            if(Auth::User()->roles == 1) return redirect()->route('admin.dashboard');               
+            else {
+                Auth::logout();
+            }
         }
         return view('admin.auth.login');
     }
@@ -34,17 +37,20 @@ class AuthController extends Controller
     }
 
     public function logout_admin() {
-        if(Auth::User()->roles == 1) {
+        if(Auth::check()) {
             Auth::logout();
             return redirect('admin');
         }
     }
 
     public function login_user() {
-        if(Auth::check() && Auth::User()->roles == 0) {
-            return redirect()->route('home');
-        }
         $data['header_title'] = 'Login';
+        if(Auth::check()) {
+            if(Auth::User()->roles == 0) return redirect()->route('home');
+            else {
+                Auth::logout();
+            }
+        }
         return view('client/auth/login', $data);
     }
 
@@ -67,7 +73,7 @@ class AuthController extends Controller
     }
 
     public function logout_user() {
-        if(Auth::User()->roles == 0) {
+        if(Auth::User()) {
             Auth::logout();
             session()->flush();
             return redirect('home');

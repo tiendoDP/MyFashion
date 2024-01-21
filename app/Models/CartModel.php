@@ -20,7 +20,10 @@ class CartModel extends Model
 
     static public function getRecord() {
         if(Auth::check()) {
-            return self::select('carts.*', 'products.name as product_name', 'products.image as image')->join('products', 'carts.product_id', '=', 'products.id')->where('user_id', '=', Auth::user()->id)->get();
+            return self::select('carts.*', 'products.name as product_name', 'products.image as image', 'products.price as price', 'products.discount as discount')
+                       ->join('products', 'carts.product_id', '=', 'products.id')
+                       ->where('user_id', '=', Auth::user()->id)
+                       ->get();
         }
         return []; 
     }

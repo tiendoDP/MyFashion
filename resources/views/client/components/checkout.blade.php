@@ -34,9 +34,9 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <label>Full Name *</label>
-                                        <input type="text" name="fullname" value="{{Auth::user()->name}}" class="form-control">
+                                        <input type="text" name="full_name" value="{{Auth::user()->name}}" class="form-control">
                                     </div>
-                                    @error('fullname')
+                                    @error('full_name')
                                     <small class="form-text text-muted">
                                     <div style="color:red">{{$message}}</div>
                                     </small>
@@ -89,7 +89,7 @@
                             
 
                                 <label>Order notes (optional)</label>
-                                <textarea class="form-control" cols="30" rows="4" placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
+                                <textarea class="form-control" name="notes" cols="30" rows="4" placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
                         </div><!-- End .col-lg-9 -->
                         <aside class="col-lg-3">
                             <div class="summary">

@@ -20,16 +20,16 @@
                         <ul>
                             <li><i class="icon-phone"></i>Call: +0123 456 789</li>
                             <li><a href="{{route('wishlist.index')}}"><i class="icon-heart-o"></i>Wishlist <span>({{!empty($all_wishlist) ? count($all_wishlist) : 0 }})</span></a></li>
-                            <li><a href="about.html">About Us</a></li>
-                            <li><a href="contact.html">Contact Us</a></li>
-                            <li>
-                                
+                            <li><a href="{{route('contact')}}">About Us</a></li>
+                            <li>                                
                                 @if(!empty(Auth::check()) && Auth::User()->role == 0)
                                     <div class="header-dropdown">
                                         <a href="#">{{Auth::user()->name}}</a>
                                         <div class="header-menu">
-                                            <ul>
-                                                <li><a href="{{route('logout')}}">Logout</a></li>
+                                            <ul style="flex-wrap: wrap; justify-content:center">
+                                                <li style="margin: 0; padding: 4px"><a href="{{route('profile')}}">Account</a></li>
+                          
+                                                <li style="margin: 0; padding: 4px"><a href="{{route('logout')}}">Logout</a></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -57,21 +57,18 @@
 
                 <nav class="main-nav">
                     <ul class="menu sf-arrows">
-                        <li class="active">
+                        <li class="">
                             <a href="{{route('home')}}" class="pr-0">Home</a>
                         </li>
-
+                        <li class="">
+                            <a href="{{route('product_list')}}" class="pr-0">Products</a>
+                        </li>
                         <li>
                             <a href="#" class="sf-with-ul">Pages</a>
 
                             <ul>
                                 <li>
-                                    <a href="about.html" class="sf-with-ul">About</a>
-
-                                    <ul>
-                                        <li><a href="about.html">About 01</a></li>
-                                        <li><a href="about-2.html">About 02</a></li>
-                                    </ul>
+                                    <a href="{{route('contact')}}">About us</a>
                                 </li>
                                 <li>
                                     <a href="contact.html" class="sf-with-ul">Contact</a>
@@ -137,7 +134,7 @@
                     @csrf
                     <div class="p-1 pl-3 bg-white rounded rounded-pill shadow-sm">
                         <div class="input-group">
-                          <input type="search" placeholder="Search ?" name="search" value="{{session('keyword')}}" aria-describedby="button-addon1" class="form-control border-0 bg-white p-0 pl-3">
+                          <input type="search" placeholder="Search ?" name="search" value="{{session('keyword')}}"  autocomplete="off" class="form-control border-0 bg-white p-0 pl-3">
                           <div class="input-group-append">
                             <button id="button-addon1" type="submit" class="btn btn-link text-primary pl-0" style="border: none"><i class="fa fa-search"></i></button>
                           </div>
@@ -165,13 +162,16 @@
 
                                     <span class="cart-product-info">
                                         <span class="cart-product-qty">{{$cart->quantity}}</span>
-                                        x ${{$cart->price}}
+                                        x @if($cart->discount != null)
+                                        <span class="">đ {{number_format((int) ($cart->price - ($cart->price * ($cart->discount / 100))), 0 , ',', '.')}}</span>
+                                        @else <span class="">đ {{number_format((int) $cart->price, 0 , ',', '.')}}</span>
+                                        @endif
                                     </span>
                                 </div><!-- End .product-cart-details -->
 
                                 <figure class="product-image-container">
                                     <a href="#" class="product-image">
-                                        <img src="{{asset('assets/images/'.$cart->image)}}" alt="product">
+                                        <img src="{{asset('assets/images/products/'.$cart->image)}}" alt="product">
                                     </a>
                                 </figure>
                                 <a href="{{ route('cart.delete', ['id' => $cart->id]) }}" class="btn-remove" title="Remove Product"><i class="icon-close"></i></a>

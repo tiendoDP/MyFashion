@@ -13,8 +13,11 @@ use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Components\CartController;
 use App\Http\Controllers\Components\CheckOutController;
 use App\Http\Controllers\Components\WishlistController;
+use App\Http\Controllers\Components\ContactController;
+use App\Http\Controllers\Components\ProfileController;
+use App\Http\Controllers\Components\OrderController;
 use App\Http\Controllers\SearchController;
-use App\Http\Controllers\Components\ProductController as ProductDetailController;
+use App\Http\Controllers\Components\ProductController as ComponentProductController;
 use App\Livewire\Cart;
 use App\Http\Controllers\MailController;
 
@@ -71,10 +74,20 @@ Route::middleware('admin')->prefix('admin')->group(function () {
 
 });
 
-Route::middleware('verifyEmail', 'shareView')->get('/home', [HomeController::class, 'index'])->name('home');
-Route::middleware('verifyEmail', 'shareView')->get('/search', [SearchController::class, 'index'])->name('search');
-
-Route::middleware('shareView')->get('/product/{id}', [ProductDetailController::class, 'index'])->name('product');
+Route::middleware('shareView')->group(function () {
+    Route::get('/product/{id}', [ComponentProductController::class, 'detailsProduct'])->name('product');
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/search', [SearchController::class, 'index'])->name('search');
+    Route::get('/product-list', [ComponentProductController::class, 'listProducts'])->name('product_list');
+    
+    Route::get('/contact', [ContactController::class, 'Index'])->name('contact');
+    Route::middleware('user')->group(function() {
+        Route::get('/profile', [ProfileController::class, 'Index'])->name('profile');
+        Route::get('/order', [OrderController::class, 'Index'])->name('order');
+        Route::get('/order-detail/{id}', [OrderController::class, 'orderDetail'])->name('orderDetail');
+        Route::get('/paymentOnline', [CheckOutController::class, 'paymentOnline']);
+    });
+});
 
 
 Route::get('/login',[AuthController::class, 'login_user'])->name('login');
@@ -109,9 +122,6 @@ Route::middleware('processingVE')->get('/message-verify-email', [MailController:
 Route::middleware('processingVE')->get('/verify/{token_verify}', [MailController::class, 'verifyEmail'])->name('verifyEmail');
 Route::get('/message-success', [MailController::class, 'message'])->name('Message.success');
 
-Route::get('/paymentOnline', [CheckOutController::class, 'paymentOnline']);
-
-Route::get('/contact', [CheckOutController::class, 'paymentOnline']);
 
 
 

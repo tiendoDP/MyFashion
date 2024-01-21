@@ -24,11 +24,23 @@ class ProductModel extends Model
         'status',
     ];
 
+    
+
     static public function getRecord() {
         return self::select('products.*', 'categories.name as category_name')
         ->join('categories', 'products.category_id', '=', 'categories.id')
+        ->orderby('id', 'desc')
         ->get();
     }
+
+    static public function newProducts() {
+        return self::select('products.*', 'categories.name as category_name')
+        ->join('categories', 'products.category_id', '=', 'categories.id')
+        ->orderby('id', 'desc')
+        ->limit(8)
+        ->get();
+    }
+
     static public function getProductById($id) {
         return self::select('products.*', 'categories.name as category_name')
         ->join('categories', 'products.category_id', '=', 'categories.id')
@@ -55,7 +67,7 @@ class ProductModel extends Model
         ->get();
     }
 
-    static public function getProductByName($keyword = null) {
+    static public function getProductByName($keyword) {
         if($keyword != null) return self::select('products.*', 'categories.name as category_name')
         ->join('categories', 'products.category_id', '=', 'categories.id')
         ->where('products.name', 'like', '%' . $keyword . '%')

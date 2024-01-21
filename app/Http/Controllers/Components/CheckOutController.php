@@ -20,18 +20,11 @@ class CheckOutController extends Controller
         return view('client.components.checkout', $data);
     }
 
-    public function checkout(CheckoutRequest $request, $payment_method, $payment_status)
+    public function checkout(CheckoutRequest $request, $payment_method)
     {
-        $order = new Order();
-        $order->user_id = Auth::user()->id;
-        $order->full_name = $request->fullname;
-        $order->email = $request->email;
-        $order->phone = $request->phone;
-        $order->country = $request->country;
-        $order->province = $request->province;
-        $order->street_address = $request->street_address;
-        $order->notes = $request->notes;
-        $order->save();
+        $orderInfor = $request->all();
+        $orderInfor['user_id'] = Auth::user()->id;
+        $order = Order::create($orderInfor);
 
         $carts = CartModel::getRecord();
         if (!empty($carts)) {
@@ -39,7 +32,6 @@ class CheckOutController extends Controller
                 $orderDetail = new OrderDetail();
                 $orderDetail->product_id = $cart->product_id;
                 $orderDetail->order_id = $order->id;
-                $orderDetail->product_name = $cart->product_name;
                 $orderDetail->quantity = $cart->quantity;
                 $orderDetail->price = $cart->price;
                 $orderDetail->save();
@@ -50,11 +42,9 @@ class CheckOutController extends Controller
         $payment->order_id = $order->id;
         $payment->payment_method = $payment_method;
         $payment->amount = $request->fntotal;
-        $payment->status = $payment_status;
+        $payment->status = 0;
         $payment->save();
 
-        CartModel::where('user_id', Auth::user()->id)->delete();
-        session()->put('fntotal', 0);
         return $payment->id;
     }
 
@@ -84,8 +74,10 @@ class CheckOutController extends Controller
     public function handleCheckout(CheckoutRequest $request)
     {
         if (isset($_POST['cod'])) {
-            $this->checkout($request, 1, 0);
-            return redirect()->route('home');
+            $this->checkout($request, 1);
+            CartModel::where('user_id', Auth::user()->id)->delete();
+            session()->forget('fntotal');
+            return redirect()->route('order');
         } 
         else if(isset($_POST['payUrl'])) {
             $endpoint = "https://test-payment.momo.vn/v2/gateway/api/create";
@@ -94,8 +86,7 @@ class CheckOutController extends Controller
             $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
 
             $orderInfo = "Thanh toán qua MoMo";
-            $amount = strval($request->fntotal * 23000);
-            //dd($amount);
+            $amount = $request->fntotal;
             $orderId = time() . "";
             $redirectUrl = "https://myfashion.do/paymentOnline";
             $ipnUrl = "https://myfashion.do/home";
@@ -135,7 +126,6 @@ class CheckOutController extends Controller
             
             $result = $this->execPostRequest($endpoint, json_encode($data));
             $jsonResult = json_decode($result, true); 
-            //dd($result);
              return redirect()->to( $jsonResult['payUrl'])->send();
             
         }
@@ -145,16 +135,13 @@ class CheckOutController extends Controller
             $vnp_TmnCode = "NQLK65B1";//Mã website tại VNPAY 
             $vnp_HashSecret = "BMXCLNOJRCLKIXZPWEPKYWVOCAOAWNZC"; //Chuỗi bí mật
             
-            $vnp_TxnRef = time() . ""; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+            $vnp_TxnRef = time() . "";
             $vnp_OrderInfo = 'Thanh toán VNPAY'; //
             $vnp_OrderType = 'billpayment';
-            $vnp_Amount = $request->fntotal * 23000 * 100;
+            $vnp_Amount = $request->fntotal * 100;
             $vnp_Locale = 'vn';
             $vnp_BankCode = 'NCB';
             $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
-            //Add Params of 2.0.1 Version
-            //$vnp_ExpireDate = $_POST['txtexpire'];
-            //Billing
 
             
             $inputData = array(
@@ -218,12 +205,17 @@ class CheckOutController extends Controller
     }
 
     public function paymentOnline(Request $request) {
+        $payment = Payment::find($request->extraData);
         if($request->message == 'Successful.'){
-            $payment = Payment::find($request->extraData);
+            CartModel::where('user_id', Auth::user()->id)->delete();
+            session()->forget('fntotal');
             $payment->status = 1;
-            $payment->amount = $request->amount;
             $payment->save();
+            return redirect()->route('order')->with('success', 'Order success');
         }
-        return redirect()->route('home')->with('success', 'Order success');
+        else {
+            Order::where('id', $payment->order_id)->delete();
+            return redirect()->route('order')->with('error', 'Error when order');
+        }
     }
 }

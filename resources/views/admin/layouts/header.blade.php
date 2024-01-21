@@ -5,7 +5,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">Home</a>
+        <a href="{{route('admin.dashboard')}}" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
@@ -177,14 +177,6 @@
               <i class="nav-icon fas fa-list-alt"></i>
               <p>
                 Category
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{url('admin/sub_category/list')}}" class="nav-link @if(Request::segment(2) == 'sub_category') active @endif">
-              <i class="nav-icon fas fa-list-alt"></i>
-              <p>
-                SubCategory
               </p>
             </a>
           </li>
