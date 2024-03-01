@@ -37,7 +37,7 @@
                                     <div class="product">
                                         <figure class="product-media">
                                             <a href="{{route('product', ['id' => $item->product_id])}}">
-                                                <img src="{{asset('assets/images/'.$item->image)}}" alt="Product image">
+                                                <img src="{{asset('assets/images/products/'.$item->image)}}" alt="Product image">
                                             </a>
                                         </figure>
         

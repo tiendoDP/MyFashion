@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('token_verify_email')->nullable();      
             $table->string('password');
-            $table->timestamp('image')->nullable();
+            $table->string('image')->nullable();
             $table->boolean('roles')->comment('0: user 1: admin'); 
             $table->boolean('status')->default(1)->comment('0: active 1: inactive'); 
             $table->boolean('is_deleted')->default(0)->comment('0: not 1: deleted'); 
